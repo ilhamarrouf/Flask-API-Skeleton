@@ -15,6 +15,10 @@ mod = Blueprint("homepage_controller", __name__)
 
 @mod.route("/", methods=["GET"])
 def index():
+    app.logger.info('Hi, im logger with level info')
+    app.logger.error('Hi, im logger with error level')
+    app.logger.debug('Hi, im logger with debug level')
+
     return respond_json(
         message="Don't know where to go? Query /help for more information.",
         success=True,

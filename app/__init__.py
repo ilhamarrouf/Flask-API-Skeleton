@@ -58,5 +58,5 @@ app.register_blueprint(file_controller.mod)
 
 
 # -- Error Handler
-from app import errorhandler
+from app import handler
 

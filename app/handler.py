@@ -5,9 +5,11 @@
     :date: 19/04/20
     :time: 12.14
 """
-
+import logging
 from app import app
 from app.utils.response import respond_json
+from datetime import datetime
+from logging.handlers import RotatingFileHandler
 from werkzeug.exceptions import BadRequest, NotFound, InternalServerError, TooManyRequests
 
 
@@ -49,3 +51,15 @@ def internal_server_error(error):
         data=None,
         code=InternalServerError.code,
     )
+
+
+def log_handler():
+    handler = RotatingFileHandler(
+        'storage/logs/' + datetime.today().strftime('%Y-%m-%d') + '.log',
+        maxBytes=10000,
+        backupCount=1
+    )
+    handler.setLevel(logging.INFO)
+    handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
+
+    return handler
