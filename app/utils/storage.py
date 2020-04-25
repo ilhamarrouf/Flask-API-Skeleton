@@ -24,6 +24,7 @@ class Minio(object):
         app.config.setdefault('MINIO_ENDPOINT', 'play.minio.io:9000')
         app.config.setdefault('MINIO_ACCESS_KEY', 'secretacess')
         app.config.setdefault('MINIO_SECRET_KEY', 'secretkey')
+        app.config.setdefault('MINIO_BUCKET', 'my_bucket')
         app.config.setdefault('MINIO_SECURE', True)
         app.config.setdefault('MINIO_REGION', None)
         app.config.setdefault('MINIO_HTTP_CLIENT', None)
