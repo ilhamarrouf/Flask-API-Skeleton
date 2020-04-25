@@ -10,6 +10,7 @@ import minio
 import os
 from app.utils import string
 from flask import current_app, _app_ctx_stack
+from werkzeug.utils import secure_filename
 
 
 class Minio(object):
@@ -48,7 +49,7 @@ class Minio(object):
         try:
             # Split file
             attributes = file_stream.filename.split('.')
-            file_name = string._random(32) + attributes[0] + '.' + attributes[1]
+            file_name = secure_filename(string._random(32) + '_' + attributes[0] + '.' + attributes[1])
             file_path = path + '/' + file_name
 
             # save to /tmp
