@@ -60,6 +60,8 @@ def log_handler():
         backupCount=1
     )
     handler.setLevel(logging.INFO)
-    handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
+    handler.setFormatter(logging.Formatter(
+        '[%(asctime)s] ' + app.config['ENV'] + '.%(levelname)s: %(message)s'
+    ))
 
     return handler
