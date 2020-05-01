@@ -50,7 +50,7 @@ class Minio(object):
         try:
             # Split file
             attributes = file_stream.filename.split('.')
-            file_name = secure_filename(string._random(32) + '_' + attributes[0] + '.' + attributes[1])
+            file_name = secure_filename(string._random(32) + '_' + attributes[0] + '.' + attributes[-1])
             file_path = path + '/' + file_name
 
             # save to /tmp
