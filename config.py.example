@@ -32,3 +32,13 @@ MINIO_BUCKET = "mybucket"
 MINIO_SECURE = False
 MINIO_REGION = "us-west-1"
 MINIO_HTTP_CLIENT = None
+
+# -- RQ
+RQ_REDIS_URL = 'redis://127.0.0.1:6379'
+RQ_QUEUES = ['high', 'default', 'low']
+RQ_ASYNC = True
+
+# -- Telegram Logger
+TELEGRAM_BOT_ENABLE = True
+TELEGRAM_BOT_TOKEN = 'my-bot-token'
+TELEGRAM_CHAT_ID = '342934'

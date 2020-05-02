@@ -9,6 +9,7 @@
 """
 
 import os
+from flask_rq2 import RQ
 from app.utils.storage import Minio
 from flask import Flask, jsonify, request
 from flask_caching import Cache
@@ -18,7 +19,6 @@ from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_sqlalchemy import SQLAlchemy
 from flasgger.base import Swagger
-
 
 # Initialize core objects
 
@@ -39,6 +39,7 @@ limiter = Limiter(
 )
 swagger = Swagger(app)
 storage = Minio(app)
+rq = RQ(app)
 
 # -- Models
 from app.models import user

@@ -7,6 +7,7 @@
 """
 
 from app import app
+from app.jobs import example_job
 from app.utils.response import respond_json
 from flask import abort, Blueprint, request, jsonify, url_for
 
@@ -16,8 +17,8 @@ mod = Blueprint("homepage_controller", __name__)
 @mod.route("/", methods=["GET"])
 def index():
     app.logger.info('Hi, im logger with level info')
-    app.logger.error('Hi, im logger with error level')
-    app.logger.debug('Hi, im logger with debug level')
+
+    example_job.perform.queue()
 
     return respond_json(
         message="Don't know where to go? Query /help for more information.",
