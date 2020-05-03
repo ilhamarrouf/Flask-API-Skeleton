@@ -9,8 +9,10 @@
 from app import db
 from app.models.user import User
 from app.requests.user import UserRequest
+from app.utils import paginator
 from app.utils.response import respond_json, respond_json_with_validation_errors
 from flask import abort, Blueprint, request, jsonify, url_for
+from sqlalchemy.sql.expression import desc
 from werkzeug.exceptions import BadRequest
 
 mod = Blueprint("user_controller", __name__, url_prefix="/api")
@@ -18,10 +20,18 @@ mod = Blueprint("user_controller", __name__, url_prefix="/api")
 
 @mod.route("/users", methods=["GET"])
 def index():
+    users = User.query.order_by(desc(User.username)).paginate(
+        page=request.args.get('page', type=int, default=1),
+        per_page=request.args.get('per_page', type=int, default=15),
+    )
+
     return respond_json(
         success=True,
         message=None,
-        data=[user.serialize for user in User.query.all()]
+        data=[user.serialize for user in users.items],
+        meta={
+            'pagination': paginator.paginate(users)
+        }
     )
 
 
