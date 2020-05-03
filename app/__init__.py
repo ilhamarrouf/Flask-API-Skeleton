@@ -49,13 +49,13 @@ if not os.path.exists("db.sqlite"):
 
 
 # -- Controllers
-from app.controllers import homepage_controller, \
-    user_controller, \
-    file_controller
+from app.controllers import file_controller, \
+    homepage_controller, \
+    user_controller
 
+app.register_blueprint(file_controller.mod)
 app.register_blueprint(homepage_controller.mod)
 app.register_blueprint(user_controller.mod)
-app.register_blueprint(file_controller.mod)
 
 
 # -- Error Handler

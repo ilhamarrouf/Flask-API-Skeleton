@@ -35,7 +35,10 @@ def help():
     func_list = []
     for rule in app.url_map.iter_rules():
         if rule.endpoint != "static":
-            func_list.append(rule.rule)
+            func_list.append({
+                'rule': rule.rule,
+                'methods': [method for method in rule.methods],
+            })
 
     return respond_json(
         message="All URL endpoints",
