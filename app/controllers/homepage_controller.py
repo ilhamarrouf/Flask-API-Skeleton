@@ -9,16 +9,19 @@
 from app import app
 from app.jobs import example_job
 from app.utils.response import respond_json
-from flask import abort, Blueprint, request, jsonify, url_for
+from flask import Blueprint, request, url_for
 
 mod = Blueprint("homepage_controller", __name__)
 
 
 @mod.route("/", methods=["GET"])
 def index():
+    # capture log with level info store to storage/logs/yyyy-mm-dd.log
     app.logger.info('Hi, im logger with level info')
 
-    example_job.perform.queue()
+    # perform job with params
+    for n in range(10):
+        example_job.perform.queue(n)
 
     return respond_json(
         message="Don't know where to go? Query /help for more information.",
