@@ -6,14 +6,22 @@
     :time: 12.10
 """
 
-def paginate(data):
-    return {
-        'has_next': data.has_next,
-        'has_prev': data.has_prev,
-        'next_num': data.next_num,
-        'prev_num': data.prev_num,
-        'page': data.page,
-        'pages': data.pages,
-        'per_page': data.per_page,
-        'total': data.total,
-    }
+from flask import abort
+from flask_sqlalchemy import Pagination
+from werkzeug.exceptions import BadRequest
+
+
+def paginate(paginator):
+    if isinstance(paginator, Pagination):
+        return {
+            'has_next': paginator.has_next,
+            'has_prev': paginator.has_prev,
+            'next_num': paginator.next_num,
+            'prev_num': paginator.prev_num,
+            'page': paginator.page,
+            'pages': paginator.pages,
+            'per_page': paginator.per_page,
+            'total': paginator.total,
+        }
+
+    abort(BadRequest.code)
