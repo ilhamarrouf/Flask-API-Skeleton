@@ -8,6 +8,7 @@
 
 import minio
 import os
+import tempfile
 from app.utils import string
 from flask import current_app, _app_ctx_stack
 from werkzeug.utils import secure_filename
@@ -54,7 +55,7 @@ class Minio(object):
             file_path = path + '/' + file_name
 
 
-            with open('/tmp/' + file_name, 'wb+') as destination:
+            with open(tempfile.gettempdir()+'/'+file_name, 'wb+') as destination:
                 file_stream.save(destination)
 
                 self.connection.fput_object(
