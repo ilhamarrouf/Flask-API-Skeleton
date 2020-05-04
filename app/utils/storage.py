@@ -48,26 +48,24 @@ class Minio(object):
 
     def put(self, path, file_stream):
         try:
-            # Split file
             attributes = file_stream.filename.split('.')
-            file_name = secure_filename(string._random(32) + '_' + attributes[0] + '.' + attributes[-1])
+
+            file_name = secure_filename(string._random(32)+'.'+ attributes[-1])
             file_path = path + '/' + file_name
 
-            # save to /tmp
-            file_stream.save("/tmp/"+file_name)
 
-            # store file to object storage
-            self.connection.fput_object(
-                current_app.config['MINIO_BUCKET'],
-                file_path,
-                "/tmp/"+file_name,
-                content_type=file_stream.content_type
-            )
+            with open('/tmp/' + file_name, 'wb+') as destination:
+                file_stream.save(destination)
 
-            # remove file from /tmp
-            os.remove("/tmp/"+file_name)
+                self.connection.fput_object(
+                    current_app.config['MINIO_BUCKET'],
+                    file_path,
+                    destination.name,
+                    content_type=file_stream.content_type
+                )
 
-            # return with filename
+                os.remove(destination.name)
+
             return file_path
         except Exception as err:
             current_app.logger.error(getattr(err, 'message', repr(err)))
