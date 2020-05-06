@@ -6,8 +6,8 @@
     :time: 05.14
 """
 
-from app import rq
+from app import app, rq
 
 
 if __name__ == '__main__':
-    rq.get_worker().work()
+    rq.get_worker().work(burst=app.config['RQ_BURST'])
