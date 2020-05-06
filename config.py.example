@@ -11,6 +11,9 @@ import os
 _basedir = os.path.abspath(os.path.dirname(__file__))
 
 APP_NAME = "Flask Skeleton"
+APP_URL = "http://localhost"
+APP_HOST = '127.0.0.1'
+APP_PORT = '8000'
 ENV = "development"
 DEBUG = True
 SECRET_KEY = "secret"

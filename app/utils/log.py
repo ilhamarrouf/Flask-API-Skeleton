@@ -8,6 +8,7 @@
 
 import requests
 import config
+from app import app
 from urllib.parse import urlencode
 
 
@@ -22,8 +23,11 @@ def telegram(message):
             + '<code>' + message + '</code>'
 
         for id in chat_id.split('.'):
-            requests.get('https://api.telegram.org/bot' + token + '/sendMessage', params=urlencode({
-                'text': message,
-                'chat_id': id,
-                'parse_mode': 'html',
-            }))
+            try:
+                requests.get('https://api.telegram.org/bot' + token + '/sendMessage', params=urlencode({
+                    'text': message,
+                    'chat_id': id,
+                    'parse_mode': 'html',
+                }))
+            except Exception as err:
+                app.logger.error(getattr(err, 'message', repr(err)))

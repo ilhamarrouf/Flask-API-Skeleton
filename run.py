@@ -6,8 +6,8 @@
     :time: 22.46
 """
 
-from app import app, handler
+from app import app
+
 
 if __name__ == "__main__":
-    app.logger.addHandler(handler.log_handler())
-    app.run(host="127.0.0.1", port=8000, debug=True)
+    app.run(host=app.config['APP_HOST'], port=app.config['APP_PORT'], debug=app.config['DEBUG'])

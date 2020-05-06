@@ -41,6 +41,10 @@ swagger = Swagger(app)
 storage = Minio(app)
 rq = RQ(app)
 
+# -- Handler
+from app import handler
+
+
 # -- Models
 from app.models import user
 
@@ -57,7 +61,4 @@ app.register_blueprint(file_controller.mod)
 app.register_blueprint(homepage_controller.mod)
 app.register_blueprint(user_controller.mod)
 
-
-# -- Error Handler
-from app import handler
 

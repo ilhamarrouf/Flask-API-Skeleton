@@ -7,6 +7,7 @@
 """
 import logging
 from app import app
+from app.utils.helpers import storage_path
 from app.utils.response import respond_json
 from datetime import datetime
 from logging.handlers import RotatingFileHandler
@@ -55,13 +56,15 @@ def internal_server_error(error):
 
 def log_handler():
     handler = RotatingFileHandler(
-        'storage/logs/' + datetime.today().strftime('%Y-%m-%d') + '.log',
+        storage_path(f"logs/{datetime.today().strftime('%Y-%m-%d')}.log"),
         maxBytes=10000,
         backupCount=1
     )
     handler.setLevel(logging.INFO)
     handler.setFormatter(logging.Formatter(
-        '[%(asctime)s] ' + app.config['ENV'] + '.%(levelname)s: %(message)s'
+        f'[%(asctime)s] {app.config["ENV"]}.%(levelname)s: %(message)s'
     ))
 
     return handler
+
+app.logger.addHandler(log_handler())

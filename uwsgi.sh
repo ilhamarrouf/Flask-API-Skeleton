@@ -1,3 +1,5 @@
+source env/bin/activate
+
 uwsgi --processes 4 \
       --threads 2 \
       --http 0.0.0.0:8000 \
