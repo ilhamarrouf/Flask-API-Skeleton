@@ -46,7 +46,9 @@ from app import handler
 
 
 # -- Models
-from app.models import user
+from app.models import user, \
+    role, \
+    role_user
 
 if not os.path.exists("db.sqlite"):
     db.create_all()

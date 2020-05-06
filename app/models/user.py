@@ -7,6 +7,8 @@
 """
 
 from app import app, db
+from app.models.role import Role
+from app.models.role_user import role_user
 from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
 from passlib.apps import custom_app_context
 
@@ -18,17 +20,19 @@ class User(db.Model):
     username = db.Column(db.String(32), index=True, unique=True)
     password = db.Column(db.String)
 
+    roles = db.relationship(Role, secondary=role_user, lazy='subquery')
+
     def hash_password(self, password):
         self.password = custom_app_context.encrypt(password)
 
     def verify_password(self, password):
         return custom_app_context.verify(password, self.password)
 
-    def generate_auth_token(self, expiration=600):
-        serializer = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
+    def generate_auth_token(self, expires_in=600):
+        serializer = Serializer(app.config['SECRET_KEY'], expires_in=expires_in)
 
         return serializer.dumps({
-            'id': self.id
+            'id': self.id,
         })
 
     @property
@@ -36,6 +40,7 @@ class User(db.Model):
         return {
             "id": self.id,
             "username": self.username,
+            'roles': [role.serialize for role in self.roles]
         }
 
     @staticmethod
