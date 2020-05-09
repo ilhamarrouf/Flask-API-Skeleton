@@ -11,7 +11,7 @@ from app.utils.helpers import storage_path
 from app.utils.response import respond_json
 from datetime import datetime
 from logging.handlers import RotatingFileHandler
-from werkzeug.exceptions import BadRequest, NotFound, InternalServerError, TooManyRequests
+from werkzeug.exceptions import BadRequest, NotFound, InternalServerError, TooManyRequests, MethodNotAllowed
 
 
 @app.errorhandler(BadRequest.code)
@@ -31,6 +31,16 @@ def not_found(error):
         success=False,
         data=None,
         code=NotFound.code,
+    )
+
+
+@app.errorhandler(MethodNotAllowed.code)
+def method_not_allowed(error):
+    return respond_json(
+        message="Error 405: Method not allowed",
+        success=False,
+        data=None,
+        code=MethodNotAllowed.code,
     )
 
 
