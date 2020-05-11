@@ -20,8 +20,8 @@ def index():
     app.logger.info('Hi, im logger with level info')
 
     # perform job with params
-    for n in range(10):
-        example_job.perform.queue(n)
+    # for n in range(10):
+    #     example_job.perform.queue(n)
 
     return respond_json(
         message="Don't know where to go? Query /help for more information.",
