@@ -14,7 +14,6 @@ from app.utils.storage import Minio
 from flask import Flask, jsonify, request
 from flask_caching import Cache
 from flask_cors.extension import CORS
-from flask_httpauth import HTTPBasicAuth
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_sqlalchemy import SQLAlchemy
@@ -28,7 +27,6 @@ app.config.from_object("config")
 cache = Cache(app)
 cors = CORS(app)
 db = SQLAlchemy(app)
-auth = HTTPBasicAuth(app)
 limiter = Limiter(
     app,
     key_func=get_remote_address,
@@ -46,18 +44,22 @@ from app import handler
 
 
 # -- Models
-from app.models import user, \
-    role, \
+from app.models import (
+    user,
+    role,
     role_user
+)
 
 if not os.path.exists("db.sqlite"):
     db.create_all()
 
 
 # -- Controllers
-from app.controllers import file_controller, \
-    homepage_controller, \
+from app.controllers import (
+    file_controller,
+    homepage_controller,
     user_controller
+)
 
 app.register_blueprint(file_controller.mod)
 app.register_blueprint(homepage_controller.mod)
