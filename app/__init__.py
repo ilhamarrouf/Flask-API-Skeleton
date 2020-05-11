@@ -9,6 +9,7 @@
 """
 
 import os
+from flask_mail import Mail
 from flask_rq2 import RQ
 from app.utils.storage import Minio
 from flask import Flask, jsonify, request
@@ -35,6 +36,7 @@ limiter = Limiter(
         "5 per second"
     ],
 )
+mail = Mail(app)
 swagger = Swagger(app)
 storage = Minio(app)
 rq = RQ(app)
@@ -58,11 +60,13 @@ if not os.path.exists("db.sqlite"):
 from app.controllers import (
     file_controller,
     homepage_controller,
+    mail_controller,
     user_controller
 )
 
 app.register_blueprint(file_controller.mod)
 app.register_blueprint(homepage_controller.mod)
+app.register_blueprint(mail_controller.mod)
 app.register_blueprint(user_controller.mod)
 
 
