@@ -17,5 +17,5 @@ def perform(n):
         log.telegram(__name__ + f'@success({n}), index: {x}')
 
 
-perform.schedule(timedelta(seconds=2), 1)
-perform.cron('* * * * *', __name__, 1)
+# perform.schedule(timedelta(seconds=2), 1)
+# perform.cron('* * * * *', __name__, 1)
