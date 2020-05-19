@@ -6,15 +6,10 @@
     :time: 08.30
 """
 
-from app import app, db
+from app import db
 from app.models.role import Role
 from app.models.role_user import role_user
-from itsdangerous import (
-    TimedJSONWebSignatureSerializer,
-    BadSignature,
-    SignatureExpired
-)
-from passlib.apps import custom_app_context
+from passlib.hash import bcrypt
 
 
 class User(db.Model):
@@ -27,19 +22,11 @@ class User(db.Model):
     roles = db.relationship(Role, secondary=role_user, lazy='subquery')
 
     def hash_password(self, password):
-        self.password = custom_app_context.encrypt(password)
+        self.password = bcrypt.hash(password)
         return self.password
 
     def verify_password(self, password):
-        return custom_app_context.verify(password, self.password)
-
-    def generate_auth_token(self, expires_in=600):
-        return TimedJSONWebSignatureSerializer(
-            app.config['SECRET_KEY'],
-            expires_in=expires_in
-        ).dumps({
-            'id': self.id,
-        }).decode('utf-8')
+        return bcrypt.verify(password, self.password)
 
     @property
     def serialize(self):
@@ -48,17 +35,3 @@ class User(db.Model):
             "username": self.username,
             'roles': [role.serialize for role in self.roles],
         }
-
-    @staticmethod
-    def verify_auth_token(token):
-        serializer = TimedJSONWebSignatureSerializer(app.config['SECRET_KEY'])
-        try:
-            data = serializer.loads(token)
-        except SignatureExpired:
-            return None
-        except BadSignature:
-            return None
-
-        user = User.query.get(data['id'])
-
-        return user

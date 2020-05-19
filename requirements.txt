@@ -1,6 +1,8 @@
 attrs==19.3.0
+bcrypt==3.1.7
 blinker==1.4
 certifi==2020.4.5.1
+cffi==1.14.0
 chardet==3.0.4
 click==7.1.2
 configparser==5.0.0
@@ -9,6 +11,7 @@ flasgger==0.9.4
 Flask==1.1.2
 Flask-Caching==1.8.0
 Flask-Cors==3.0.8
+Flask-JWT-Extended==3.24.1
 Flask-Limiter==1.2.1
 Flask-Mail==0.9.1
 Flask-RQ2==18.3
@@ -23,6 +26,8 @@ MarkupSafe==1.1.1
 minio==5.0.10
 mistune==0.8.4
 passlib==1.7.2
+pycparser==2.20
+PyJWT==1.7.1
 pyrsistent==0.16.0
 python-dateutil==2.8.1
 pytz==2020.1

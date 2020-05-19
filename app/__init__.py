@@ -9,6 +9,7 @@
 """
 
 import os
+from flask_jwt_extended.jwt_manager import JWTManager
 from flask_mail import Mail
 from flask_rq2 import RQ
 from app.utils.storage import Minio
@@ -28,6 +29,7 @@ app.config.from_object("config")
 cache = Cache(app)
 cors = CORS(app)
 db = SQLAlchemy(app)
+jwt = JWTManager(app)
 limiter = Limiter(
     app,
     key_func=get_remote_address,
@@ -42,7 +44,11 @@ storage = Minio(app)
 rq = RQ(app)
 
 # -- Handler
-from app import handler
+from app.handlers import (
+    http_handler,
+    jwt_handler,
+    log_handler
+)
 
 
 # -- Models
@@ -52,18 +58,21 @@ from app.models import (
     role_user
 )
 
+# Comment above code when change database systems
 if not os.path.exists("db.sqlite"):
     db.create_all()
 
 
 # -- Controllers
 from app.controllers import (
+    auth_controller,
     file_controller,
     homepage_controller,
     mail_controller,
     user_controller
 )
 
+app.register_blueprint(auth_controller.mod)
 app.register_blueprint(file_controller.mod)
 app.register_blueprint(homepage_controller.mod)
 app.register_blueprint(mail_controller.mod)

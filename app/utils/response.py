@@ -10,7 +10,7 @@ from flask import request, jsonify
 from werkzeug.exceptions import UnprocessableEntity
 
 
-def respond_json(success, message, data=None, meta=None, code=200):
+def respond_json(success, message=None, data=None, meta=None, code=200):
     response = {"success": success}
 
     if message:
