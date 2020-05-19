@@ -56,3 +56,11 @@ MAIL_USE_SSL = True
 MAIL_USERNAME = 'myusername'
 MAIL_PASSWORD = 'mysecretpassword'
 MAIL_DEFAULT_SENDER = 'support@ilhamarrouf.systems'
+
+# JWT
+JWT_SECRET_KEY = SECRET_KEY
+JWT_TOKEN_LOCATION = [
+    'headers',
+    'query_string'
+]
+JWT_QUERY_STRING_NAME = 'token'
