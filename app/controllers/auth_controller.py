@@ -10,11 +10,7 @@ from flask import jsonify, request
 from flask.blueprints import Blueprint
 from werkzeug.exceptions import Unauthorized
 from app.models.user import User
-from flask_jwt_extended import (
-    jwt_required,
-    create_access_token,
-    get_jwt_identity,
-)
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.utils.response import respond_json
 
 mod = Blueprint('auth_controller', __name__, url_prefix='/api/auth')
@@ -42,10 +38,7 @@ def login():
 
     return jsonify({
         "token_type": "Bearer",
-        "access_token": create_access_token(
-            identity=user.id,
-            fresh=True,
-        ),
+        "access_token": user.create_access_token(),
     })
 
 

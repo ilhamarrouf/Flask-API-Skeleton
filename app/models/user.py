@@ -10,6 +10,7 @@ from app import db
 from app.models.role import Role
 from app.models.role_user import role_user
 from passlib.hash import bcrypt
+from flask_jwt_extended import create_access_token
 
 
 class User(db.Model):
@@ -27,6 +28,12 @@ class User(db.Model):
 
     def verify_password(self, password):
         return bcrypt.verify(password, self.password)
+
+    def create_access_token(self, fresh=False):
+        return create_access_token(
+            identity=self.id,
+            fresh=fresh
+        )
 
     @property
     def serialize(self):
