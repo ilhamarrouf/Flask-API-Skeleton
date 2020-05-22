@@ -7,6 +7,7 @@
 """
 
 from app import jwt
+from app.models.user import User
 from app.utils.response import respond_json
 from werkzeug.exceptions import Unauthorized
 
@@ -34,5 +35,19 @@ def expired_token_loader():
     return respond_json(
         success=False,
         message='Token has expired.',
+        code=Unauthorized.code
+    )
+
+
+@jwt.user_loader_callback_loader
+def user_loader_callback(identity):
+    return User.query.get(identity)
+
+
+@jwt.user_loader_error_loader
+def custom_user_loader_error(identity):
+    return respond_json(
+        success=False,
+        message="Auth user {} not found".format(identity),
         code=Unauthorized.code
     )

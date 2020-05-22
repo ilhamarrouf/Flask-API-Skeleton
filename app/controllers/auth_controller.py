@@ -10,7 +10,7 @@ from flask import jsonify, request
 from flask.blueprints import Blueprint
 from werkzeug.exceptions import Unauthorized
 from app.models.user import User
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required, current_user
 from app.utils.response import respond_json
 
 mod = Blueprint('auth_controller', __name__, url_prefix='/api/auth')
@@ -47,5 +47,5 @@ def login():
 def account():
     return respond_json(
         success=True,
-        data=User.query.get(get_jwt_identity()).serialize
+        data=current_user.serialize
     )
