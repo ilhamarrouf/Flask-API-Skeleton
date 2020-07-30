@@ -50,14 +50,6 @@ from app.handlers import (
     log_handler
 )
 
-
-# -- Models
-from app.models import (
-    user,
-    role,
-    role_user
-)
-
 # Comment above code when change database systems
 if not os.path.exists("db.sqlite"):
     db.create_all()

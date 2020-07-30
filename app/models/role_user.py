@@ -7,9 +7,9 @@
 """
 
 from app import db
-
+from app.models.role import Role
 
 role_user = db.Table('role_user', db.metadata,
     db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
-    db.Column('role_id', db.Integer, db.ForeignKey('roles.id'))
+    db.Column('role_id', db.Integer, db.ForeignKey(Role.id))
 )
