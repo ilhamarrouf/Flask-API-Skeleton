@@ -20,7 +20,7 @@ class User(db.Model):
     username = db.Column(db.String(32), index=True, unique=True)
     password = db.Column(db.String)
 
-    roles = db.relationship(Role, secondary=role_user, lazy='subquery')
+    roles = db.relationship(Role, secondary=role_user, lazy='dynamic')
 
     def hash_password(self, password):
         self.password = bcrypt.hash(password)

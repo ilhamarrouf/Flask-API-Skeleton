@@ -7,6 +7,7 @@
 """
 
 from app import app
+from app.exceptions.authentication_http_exception import AuthenticationHttpException
 from app.utils.response import respond_json
 from werkzeug.exceptions import (
     BadRequest, NotFound, InternalServerError,
@@ -66,4 +67,14 @@ def internal_server_error(error):
         message="Error 500: Internal server error",
         success=False,
         code=InternalServerError.code,
+    )
+
+
+@app.errorhandler(AuthenticationHttpException)
+def handle_authentication_http_exception(error):
+    return respond_json(
+        success=False,
+        code=error.status_code,
+        message=error.message,
+        errors=error.errors
     )
