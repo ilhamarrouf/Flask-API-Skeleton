@@ -10,6 +10,7 @@ services:
       - "5000:80"
     environment:
       TZ: Asia/Jakarta
+      FLASK_APP: .
     links:
       - redis:redis
     depends_on:
