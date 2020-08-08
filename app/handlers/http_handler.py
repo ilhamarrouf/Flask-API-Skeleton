@@ -30,7 +30,7 @@ def unauthenticated(error):
     return respond_json(
         message="Error 401: Unauthenticated",
         success=False,
-        code=BadRequest.code,
+        code=Unauthorized.code,
     )
 
 
