@@ -13,16 +13,16 @@ from werkzeug.exceptions import UnprocessableEntity
 def respond_json(success, message=None, data=None, meta=None, errors=None, code=200):
     response = {"success": success}
 
-    if message:
+    if not message is None:
         response["message"] = message
 
-    if data:
+    if not data is None:
         response["data"] = data
 
-    if meta:
+    if not meta is None:
         response['meta'] = meta
 
-    if errors:
+    if not errors is None:
         response['errors'] = errors
 
     return jsonify(response), code
