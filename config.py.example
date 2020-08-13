@@ -40,7 +40,7 @@ MINIO_HTTP_CLIENT = None
 RQ_REDIS_URL = 'redis://127.0.0.1:6379'
 RQ_QUEUES = ['high', 'default', 'low']
 RQ_ASYNC = True
-RQ_SCHEDULER_INTERVAL = 1
+RQ_SCHEDULER_INTERVAL = 60
 RQ_BURST = True
 
 # -- Telegram Logger

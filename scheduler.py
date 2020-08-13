@@ -6,8 +6,7 @@
     :time: 05.33
 """
 
-from app import rq
-
+from app import rq, app
 
 if __name__ == '__main__':
-    rq.get_scheduler().run()
+    rq.get_scheduler(interval=app.config['RQ_SCHEDULER_INTERVAL']).run()
