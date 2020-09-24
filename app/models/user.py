@@ -22,11 +22,11 @@ class User(db.Model):
 
     roles = db.relationship(Role, secondary=role_user, lazy='dynamic')
 
-    def hash_password(self, password):
+    def hash_password(self, password) -> str:
         self.password = bcrypt.hash(password)
         return self.password
 
-    def verify_password(self, password):
+    def verify_password(self, password) -> bool:
         return bcrypt.verify(password, self.password)
 
     def create_access_token(self, fresh=False):
@@ -36,7 +36,7 @@ class User(db.Model):
         )
 
     @property
-    def serialize(self):
+    def serialize(self) -> dict:
         return {
             "id": self.id,
             "username": self.username,
