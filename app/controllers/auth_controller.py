@@ -18,6 +18,9 @@ mod = Blueprint('auth_controller', __name__, url_prefix='/api/auth')
 
 @mod.route('/login', methods=['POST'])
 def login():
+    """
+    Validate request
+    """
     validator = Validator({
         'username': {
             'type': 'string',
@@ -36,6 +39,9 @@ def login():
     if not validator.validate(request.json):
         return respond_json_with_validation_errors(validator.errors)
 
+    """
+    Get data user by username
+    """
     user = User.query.filter_by(
         username=request.json.get('username')
     ).first()
@@ -46,6 +52,9 @@ def login():
     if not user.verify_password(request.json.get('password')):
         raise AuthenticationHttpException
 
+    """
+    Response to json
+    """
     return jsonify({
         "token_type": "Bearer",
         "access_token": user.create_access_token(),
