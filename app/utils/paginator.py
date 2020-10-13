@@ -24,4 +24,7 @@ def paginate(paginator):
             'total': paginator.total,
         }
 
+    """
+    Abort request when paginator not instance sqlalchemy pagination
+    """
     abort(BadRequest.code)
