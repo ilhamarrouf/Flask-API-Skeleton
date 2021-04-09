@@ -21,9 +21,11 @@ def log_handler():
     )
     handler.setLevel(logging.INFO)
     handler.setFormatter(logging.Formatter(
-        f'[%(asctime)s] {app.config["ENV"]}.%(levelname)s: %(message)s'
+        f'[%(asctime)s] {app.config["ENV"]}.%(levelname)s: %(message)s '
+        '[in %(pathname)s:%(lineno)d]'
     ))
 
     return handler
+
 
 app.logger.addHandler(log_handler())
