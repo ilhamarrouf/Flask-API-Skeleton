@@ -11,7 +11,7 @@ croniter==0.3.31
 flasgger==0.9.4
 Flask==1.1.2
 Flask-Caching==1.8.0
-Flask-Cors==3.0.8
+Flask-Cors==3.0.9
 Flask-JWT-Extended==3.24.1
 Flask-Limiter==1.2.1
 Flask-Mail==0.9.1
