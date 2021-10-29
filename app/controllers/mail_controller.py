@@ -21,7 +21,7 @@ def send():
     try:
         # please read docs https://pythonhosted.org/Flask-Mail/
         message = Message('Hello this is my subject mail')
-        message.recipients = ['ilham.arrouf@gmail.com',]
+        message.recipients = ['ilham.arrouf@gmail.com', ]
         message.html = 'Hello my name is <b>ilhamarrouf</b>'
 
         with app.app_context():
